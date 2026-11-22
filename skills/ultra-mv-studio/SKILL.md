@@ -1,6 +1,6 @@
 ---
 name: ultra-mv-studio
-description: 使用 Google AI Ultra 20× 网页权益与 Antigravity 内置 Browser Agent，在 Google Flow 以纯 720p（禁止超分辨率）首尾帧连贯生成多段视频，结合 Demucs + stable-ts 人声歌词毫秒级强制对齐与本地 FFmpeg 剪辑压制精装字幕，端到端制作完整音乐 MV。当用户要求制作音乐 MV、配置 Antigravity Flow 工作流、批量生成首尾帧连贯视频或精准对齐 MV 歌词字幕时触发。
+description: 仅使用现有 Google AI Pro会员或者Ultra 20× 网页会员权益与 Antigravity 内置 Browser Agent，在 Google Flow 以纯 720p（禁止超分辨率）首尾帧连贯生成多段视频，结合 Demucs + stable-ts 人声歌词毫秒级强制对齐与本地 FFmpeg 剪辑压制精装字幕，端到端制作完整音乐 MV。当用户要求制作音乐 MV、配置 Antigravity Flow 工作流、批量生成首尾帧连贯视频或精准对齐 MV 歌词字幕时触发。
 ---
 
 # Ultra MV Studio Skill（720P 经济高质 + 精准字幕对齐全流程）
@@ -11,7 +11,7 @@ description: 使用 Google AI Ultra 20× 网页权益与 Antigravity 内置 Brow
 
 ## 最高优先级硬性规则
 
-1. **零付费 API**：仅使用用户现有 **Google AI Ultra 20×** 官方网页权益（`https://gemini.google.com/` 与 `https://flow.google.com/`）。严禁调用独立计费的 Gemini / Veo / Lyria / Vertex AI API，严禁创建 GCP 付费项目或购买额外积分。
+1. **零付费 API**：仅使用现有 Google AI Pro会员或者Ultra 20× 网页会员权益（`https://gemini.google.com/` 与 `https://flow.google.com/`）。严禁调用独立计费的 Gemini / Veo / Lyria / Vertex AI API，严禁创建 GCP 付费项目或购买额外积分。
 2. **严格锁定 `720p` 原生分辨率，禁止 Flow 超分辨率**：
    - 在 Google Flow 生成视频时，分辨率设为 **`720p`**（`16:9`、`x1`）。
    - 下载视频片段时，**必须且只能选择 `720p Original size`（额外 0 积分）**。
@@ -31,7 +31,7 @@ description: 使用 Google AI Ultra 20× 网页权益与 Antigravity 内置 Brow
 ### Step 2：检查内置浏览器登录状态
 1. 启动 `browser` subagent（默认使用 `flash` 模型）访问 `https://flow.google.com/`（如需要创作歌曲则同时检查 `https://gemini.google.com/`）。
 2. 如遇到 `accounts.google.com` 登录拦截或未登录状态：保留标签页、**暂停并提示用户手动在内置浏览器完成登录**；用户确认后通过 `send_message` 唤醒同一个 `browser` subagent 继续，不新建多余浏览器代理。
-3. 核实账户 `ULTRA` 标识、当前可用积分余额、可用视频模型（如 `Omni 1.2 Flash`、`Veo 3.1 - Lite [Lower Priority]`）以及 `Visible watermarking` 是否关闭。
+3. 核实账户 `PRO` / `ULTRA` 会员标识、当前可用积分余额、可用视频模型（如 `Omni 1.2 Flash`、`Veo 3.1 - Lite [Lower Priority]`）以及 `Visible watermarking` 是否关闭。
 
 ### Step 3：准备音频、歌词与主角视觉设定
 1. **音频**：导入用户提供的原唱音频（或经确认后通过 Gemini 网页端 `Create music` 生成并下载）至 `music/`，用 `ffprobe` 获取精确总时长（秒）。
