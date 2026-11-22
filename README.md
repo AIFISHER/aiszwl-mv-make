@@ -4,11 +4,11 @@
 
 ![《月光》3D国漫风MV 九宫格成片预览](mv_preview_grid_3x3.jpg)
 
-本指南完整记录了如何在 **macOS（Apple Silicon）** 上，利用 **Google Antigravity 独立桌面 App 内置 Browser Agent** + **Google AI Ultra 20× 官方网页权益（Google Flow）** + **开源人声歌词强制对齐（Demucs + stable-ts）** + **本地 FFmpeg 硬件剪辑**，从零配置到自动产出一部 **4 分 32 秒、双主角高度锁定、首尾帧连贯、字幕毫秒级精准对齐** 的完整 3D 国漫风音乐 MV。
+本指南完整记录了如何在 **Windows 或者 macOS** 上，利用 **Google Antigravity 独立桌面 App 内置 Browser Agent** + **仅使用现有 Google AI Pro会员或者Ultra 20× 网页会员权益（Google Flow）** + **开源人声歌词强制对齐（Demucs + stable-ts）** + **本地 FFmpeg 硬件剪辑**，从零配置到自动产出一部 **4 分 32 秒、双主角高度锁定、首尾帧连贯、字幕毫秒级精准对齐** 的完整 3D 国漫风音乐 MV。
 
 > [!IMPORTANT]
 > **核心铁律（零额外付费 & 拒绝超分浪费）**
-> 1. **仅使用现有 Google AI Ultra 20× 网页会员权益**：严禁调用任何独立计费 API（Gemini API / Veo API / Lyria API / Vertex AI API），严禁绑定 GCP 计费或购买额外积分。
+> 1. **仅使用现有 Google AI Pro会员或者Ultra 20× 网页会员权益**：严禁调用任何独立计费 API（Gemini API / Veo API / Lyria API / Vertex AI API），严禁绑定 GCP 计费或购买额外积分。
 > 2. **Flow 生成与下载统一锁定 `720p Original size`，严禁使用 Flow 超分辨率（不要点 `1080p Upscaled` 或 `4K Upscaled`）**：
 >    - `720p Original size` 下载**额外消耗 `0` 积分**、下载更快、无需等待云端超分队列；
 >    - 避免单段视频 1～5 积分（1080p）或 50 积分（4K）的额外超分开销；
@@ -21,9 +21,9 @@
 
 | 组件 | 推荐版本 / 要求 | 用途 |
 | :--- | :--- | :--- |
-| 操作系统 | macOS（Apple Silicon M1/M2/M3/M4 推荐） | 支持 VideoToolbox 硬件加速与 PyTorch MPS |
-| Google Antigravity App | `v2.30.0+`（个人 Google AI Ultra 账号） | 提供内置侧边栏浏览器与 `browser` subagent |
-| Google 服务 | `https://gemini.google.com/`、`https://flow.google.com/` | 网页端音乐与视频生成（Ultra 权益） |
+| 操作系统 | Windows 10/11 或 macOS（Apple Silicon M 系列推荐） | Windows 支持 NVIDIA CUDA/NVENC，macOS 支持 VideoToolbox/MPS（无独显亦可 CPU 运行） |
+| Google Antigravity App | `v2.30.0+`（个人 Google AI Pro 或 Ultra 20× 账号） | 提供内置侧边栏浏览器与 `browser` subagent |
+| Google 服务 | `https://gemini.google.com/`、`https://flow.google.com/` | 网页端音乐与视频生成（仅使用现有 Google AI Pro会员或者Ultra 20× 网页会员权益） |
 | 本地媒体工具 | `ffmpeg`（需启用 `libass` / `libfreetype`）、`ffprobe` | 视频拼接、`xfade` 转场、音画合成、字幕烧录 |
 | Python 环境 | `Python 3.11+` + `uv`（或 `venv`） | 运行工程脚本与 Demucs / stable-ts 歌词强制对齐 |
 
@@ -50,8 +50,8 @@ ffmpeg -encoders 2>/dev/null | grep -E "h264_videotoolbox|libx264|aac"
 
 ### 2.2 手动登录 Google 账号与 Flow（安全隔离规范）
 Antigravity 内置安全护栏**禁止** Browser Agent 操作 `accounts.google.com` 登录页。标准做法：
-1. 在 Antigravity 右侧内置浏览器标签页中手动打开 `https://gemini.google.com/`，登录你的 Google AI Ultra 账号（确认侧边栏显示 `Ultra` 标识）。
-2. 再打开 `https://flow.google.com/` 完成授权登录，确认进入 Flow 首页并显示 **`ULTRA` tier** 与可用月度积分余额。
+1. 在 Antigravity 右侧内置浏览器标签页中手动打开 `https://gemini.google.com/`，登录你的 Google AI Pro 或 Ultra 20× 账号（确认侧边栏显示 `Pro` 或 `Ultra` 标识）。
+2. 再打开 `https://flow.google.com/` 完成授权登录，确认进入 Flow 首页并显示对应的 **`PRO` / `ULTRA` tier** 与可用月度积分余额。
 3. 在 Flow 右上角 **Account Settings** 中检查 **`Visible watermarking`** 设为 **`OFF`**（关闭可见水印）。
 
 ---
